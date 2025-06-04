@@ -1,0 +1,3 @@
+-- For java lsp
+return {
+}
