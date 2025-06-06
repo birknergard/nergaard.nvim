@@ -26,19 +26,16 @@ vim.api.nvim_create_autocmd('CursorMoved', {
 
 vim.opt.mouse = 'a'
 
+-- Indent settings
+vim.opt.expandtab = true
+vim.opt.shiftwidth = 2
+vim.opt.softtabstop = 2
+
 vim.opt.showmode = false
 
 vim.schedule(function()
   vim.opt.clipboard = 'unnamedplus'
 end)
-
--- Enable break indent
-vim.opt.breakindent = false
-
--- Indent settings
-vim.opt.expandtab = true
-vim.opt.shiftwidth = 3
-vim.opt.softtabstop = 3
 
 -- Save undo history
 vim.opt.undofile = true
@@ -46,6 +43,9 @@ vim.opt.undofile = true
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
+
+-- Enable break indent
+vim.opt.breakindent = false
 
 -- Keep signcolumn on by default
 vim.opt.signcolumn = 'yes'
@@ -367,7 +367,17 @@ require('lazy').setup({
       'WhoIsSethDaniel/mason-tool-installer.nvim',
 
       -- Useful status updates for LSP.
-      { 'j-hui/fidget.nvim', opts = {} },
+      {
+        'j-hui/fidget.nvim',
+        opts = {
+          notification = {
+            window = {
+              winblend = 0, -- transparency (0 = opaque)
+              border = 'none', -- 'single', 'double', 'none', etc.
+            },
+          },
+        },
+      },
       { 'folke/neodev.nvim', opts = {} },
 
       -- Allows extra capabilities provided by blink.cmp
@@ -533,15 +543,13 @@ require('lazy').setup({
       --  So, we create new capabilities with blink.cmp, and then broadcast that to the servers.
       local capabilities = require('blink.cmp').get_lsp_capabilities()
 
-      -- Enable the following language servers
-      --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
-      --
       --  Add any additional override configuration in the following tables. Available keys are:
       --  - cmd (table): Override the default command used to start the server
       --  - filetypes (table): Override the default list of associated filetypes for the server
       --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
+      -- NOTE: Add servers here
       local servers = {
         -- gopls = {},
         pyright = {},
@@ -570,19 +578,7 @@ require('lazy').setup({
         },
       }
 
-      -- Ensure the servers and tools above are installed
-      --
-      -- To check the current status of installed tools and/or manually install
-      -- other tools, you can run
-      --    :Mason
-      --
       -- You can press `g?` for help in this menu.
-      --
-      -- `mason` had to be setup earlier: to configure its options see the
-      -- `dependencies` table for `nvim-lspconfig` above.
-      --
-      -- You can add other tools here that you want Mason to install
-      -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
@@ -645,6 +641,21 @@ require('lazy').setup({
         lua = { 'stylua' },
         python = { 'isort' },
         javascript = { 'prettierd' },
+        java = { 'google_java_format' },
+        cpp = { 'clang_format' },
+        c = { 'clang_format' },
+      },
+      formatters = {
+        google_java_format = {
+          command = 'google-java-format',
+          args = { '-' },
+          stdin = true,
+        },
+        clangd_format = {
+          command = 'clang_format',
+          args = { '--assume-filename', 'temp.cpp' },
+          stdin = true,
+        },
       },
     },
   },
@@ -666,6 +677,8 @@ require('lazy').setup({
       vim.api.nvim_set_hl(0, 'NormalNC', { bg = 'none', blend = 10 })
       vim.api.nvim_set_hl(0, 'EndOfBuffer', { bg = 'none', blend = 10 })
       vim.api.nvim_set_hl(0, 'SignColumn', { bg = 'none', blend = 10 })
+      vim.api.nvim_set_hl(0, 'FidgetTitle', { bg = 'none' })
+      vim.api.nvim_set_hl(0, 'FidgetTask', { bg = 'none' })
 
       -- Line number colors
       vim.api.nvim_set_hl(0, 'LineNr', { fg = '#FF5757', bg = 'none', italic = true })
@@ -707,7 +720,23 @@ require('lazy').setup({
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'java' },
+      ensure_installed = {
+        'bash',
+        'diff',
+        'html',
+        'lua',
+        'luadoc',
+        'markdown',
+        'markdown_inline',
+        'query',
+        'vim',
+        'vimdoc',
+        'java',
+        'c',
+        'cpp',
+        'typescript',
+        'javascript',
+      },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
@@ -728,7 +757,7 @@ require('lazy').setup({
   },
 
   -- require 'kickstart.plugins.debug',
-  --require 'kickstart.plugins.indent_line',
+  -- require 'kickstart.plugins.indent_line',
   require 'kickstart.plugins.lint',
   require 'kickstart.plugins.autopairs',
   require 'kickstart.plugins.neo-tree',
@@ -768,4 +797,4 @@ require('lazy').setup({
   }),
 })
 -- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=3 sts=3 sw=3 et
+-- vim: ts=2 sts=2 sw=2 et
