@@ -1,11 +1,11 @@
--- Set <space> as the leader key
--- See `:help mapleader`
---   NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
+local vim = vim
+
+-- Set leader
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
--- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
+
 -- [[ Setting options ]]
 -- See `:help vim.opt`
 -- NOTE: You can change these options as you wish!
@@ -24,16 +24,10 @@ vim.api.nvim_create_autocmd('CursorMoved', {
   end,
 })
 
--- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
 
--- Don't show the mode, since it's already in the status line
 vim.opt.showmode = false
 
--- Sync clipboard between OS and Neovim.
---   Schedule the setting after `UiEnter` because it can increase startup-time.
---   Remove this option if you want your OS clipboard to remain independent.
---   See `:help 'clipboard'`
 vim.schedule(function()
   vim.opt.clipboard = 'unnamedplus'
 end)
@@ -141,26 +135,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
--- LSP (Lua)
-vim.lsp.config['lua-ls'] = {
-  cmd = { 'lua-language-server' },
-  root_markers = { { '.luarc.json', '.luarc.jsonc' }, '.git' },
-  filetypes = { 'lua' },
-
-  settings = {
-    Lua = {
-      diagnostics = {
-        globals = { 'vim' },
-      },
-
-      runtime = {
-        version = 'LuaJIT',
-      },
-    },
-  },
-}
-vim.lsp.enable 'lua-ls'
-
 -- [[ Install `lazy.nvim` plugin manager ]]
 --      See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -185,13 +159,9 @@ vim.opt.rtp:prepend(lazypath)
 --
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
-  'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
-
-  { -- Downloads mason
-    'mason-org/mason.nvim',
-    opts = {},
+  {
+    'tpope/vim-sleuth',
   },
-
   { -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
     opts = {
@@ -205,12 +175,6 @@ require('lazy').setup({
     },
   },
 
-  -- Java LSP setup
-  {
-    'mfussenegger/nvim-jdtls',
-  },
-
-  'neovim/nvim-lspconfig',
   { -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
@@ -390,6 +354,7 @@ require('lazy').setup({
       end,
     },
   },
+
   {
     -- Main LSP Configuration
     'neovim/nvim-lspconfig',
@@ -403,36 +368,28 @@ require('lazy').setup({
 
       -- Useful status updates for LSP.
       { 'j-hui/fidget.nvim', opts = {} },
+      { 'folke/neodev.nvim', opts = {} },
 
       -- Allows extra capabilities provided by blink.cmp
-      'saghen/blink.cmp',
+      {
+        'saghen/blink.cmp',
+        dependencies = 'rafamadriz/friendly-snippets',
+
+        version = 'v0.*',
+
+        opts = {
+          keymap = { preset = 'default' },
+
+          appearance = {
+            use_nvim_cmp_as_default = true,
+            nerd_font_variant = 'mono',
+          },
+
+          signature = { enabled = true },
+        },
+      },
     },
     config = function()
-      -- Brief aside: **What is LSP?**
-      --
-      -- LSP is an initialism you've probably heard, but might not understand what it is.
-      --
-      -- LSP stands for Language Server Protocol. It's a protocol that helps editors
-      -- and language tooling communicate in a standardized fashion.
-      --
-      -- In general, you have a "server" which is some tool built to understand a particular
-      -- language (such as `gopls`, `lua_ls`, `rust_analyzer`, etc.). These Language Servers
-      -- (sometimes called LSP servers, but that's kind of like ATM Machine) are standalone
-      -- processes that communicate with some "client" - in this case, Neovim!
-      --
-      -- LSP provides Neovim with features like:
-      --  - Go to definition
-      --  - Find references
-      --  - Autocompletion
-      --  - Symbol Search
-      --  - and more!
-      --
-      -- Thus, Language Servers are external tools that must be installed separately from
-      -- Neovim. This is where `mason` and related plugins come into play.
-      --
-      -- If you're wondering about lsp vs treesitter, you can check out the wonderfully
-      -- and elegantly composed help section, `:help lsp-vs-treesitter`
-
       --  This function gets run when an LSP attaches to a particular buffer.
       --    That is to say, every time a new file is opened that is associated with
       --    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
@@ -586,9 +543,9 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        -- clangd = {},
         -- gopls = {},
-        -- pyright = {},
+        pyright = {},
+        clangd = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -596,20 +553,18 @@ require('lazy').setup({
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`ts_ls`) will work just fine
-        -- ts_ls = {},
-        --
+        ts_ls = {},
+        tailwindcss = {},
 
         lua_ls = {
-          -- cmd = { ... },
-          -- filetypes = { ... },
-          -- capabilities = {},
           settings = {
             Lua = {
-              completion = {
-                callSnippet = 'Replace',
+              runtime = {
+                version = 'LuaJIT',
               },
-              -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-              -- diagnostics = { disable = { 'missing-fields' } },
+              diagnostics = {
+                globals = { 'vim' },
+              },
             },
           },
         },
@@ -649,6 +604,9 @@ require('lazy').setup({
         },
       }
     end,
+  },
+  { -- Java LSP setup
+    'mfussenegger/nvim-jdtls',
   },
   { -- Autoformat
     'stevearc/conform.nvim',
