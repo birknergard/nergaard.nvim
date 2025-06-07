@@ -641,6 +641,7 @@ require('lazy').setup({
         lua = { 'stylua' },
         python = { 'isort' },
         javascript = { 'prettierd' },
+        xml = { 'prettierd' },
         java = { 'google_java_format' },
         cpp = { 'clang_format' },
         c = { 'clang_format' },
