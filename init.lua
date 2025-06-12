@@ -1,3 +1,4 @@
+-- Restricts error to here rather than all over the doc
 local vim = vim
 
 -- Set leader
@@ -15,7 +16,7 @@ vim.g.have_nerd_font = true
 vim.opt.number = true
 vim.opt.relativenumber = true
 
--- Update numbers dynamically when moving the cursor
+-- Update line numbers dynamically when moving the cursor
 vim.api.nvim_create_autocmd('CursorMoved', {
   pattern = '*',
   callback = function()
@@ -147,17 +148,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
--- [[ Configure and install plugins ]]
---
---   To check the current status of your plugins, run
---      :Lazy
---
---   You can press `?` in this menu for help. Use `:q` to close the window
---
---   To update plugins you can run
---      :Lazy update
---
--- NOTE: Here is where you install your plugins.
+-- Lazy, plugin manager
 require('lazy').setup({
   {
     'tpope/vim-sleuth',
@@ -240,13 +231,10 @@ require('lazy').setup({
   -- Use the `dependencies` key to specify the dependencies of a particular plugin
 
   { -- LSP Plugins
-    -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
-    -- used for completion, annotations and signatures of Neovim apis
-    'folke/lazydev.nvim',
+    'folke/lazydev.nvim', -- For Lua and config
     ft = 'lua',
     opts = {
       library = {
-        -- Load luvit types when the `vim.uv` word is found
         { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
       },
     },
@@ -274,37 +262,7 @@ require('lazy').setup({
         { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
       },
       config = function()
-        -- Telescope is a fuzzy finder that comes with a lot of different things that
-        -- it can fuzzy find! It's more than just a "file finder", it can search
-        -- many different aspects of Neovim, your workspace, LSP, and more!
-        --
-        -- The easiest way to use Telescope, is to start by doing something like:
-        --  :Telescope help_tags
-        --
-        -- After running this command, a window will open up and you're able to
-        -- type in the prompt window. You'll see a list of `help_tags` options and
-        -- a corresponding preview of the help.
-        --
-        -- Two important keymaps to use while in Telescope are:
-        --  - Insert mode: <c-/>
-        --  - Normal mode: ?
-        --
-        -- This opens a window that shows you all of the keymaps for the current
-        -- Telescope picker. This is really useful to discover what Telescope can
-        -- do as well as how to actually do it!
-
-        -- [[ Configure Telescope ]]
-        -- See `:help telescope` and `:help telescope.setup()`
         require('telescope').setup {
-          -- You can put your default mappings / updates / etc. in here
-          --  All the info you're looking for is in `:help telescope.setup()`
-          --
-          -- defaults = {
-          --   mappings = {
-          --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-          --   },
-          -- },
-          -- pickers = {}
           extensions = {
             ['ui-select'] = {
               require('telescope.themes').get_dropdown(),
@@ -383,8 +341,8 @@ require('lazy').setup({
       -- Allows extra capabilities provided by blink.cmp
       {
         'saghen/blink.cmp',
+        build = 'cargo build --release',
         dependencies = 'rafamadriz/friendly-snippets',
-
         version = 'v0.*',
 
         opts = {
@@ -396,6 +354,7 @@ require('lazy').setup({
           },
 
           signature = { enabled = true },
+          fuzzy = { implementation = 'prefer_rust_with_warning' },
         },
       },
     },
@@ -537,32 +496,149 @@ require('lazy').setup({
         },
       }
 
-      -- LSP servers and clients are able to communicate to each other what features they support.
-      --  By default, Neovim doesn't support everything that is in the LSP specification.
-      --  When you add blink.cmp, luasnip, etc. Neovim now has *more* capabilities.
-      --  So, we create new capabilities with blink.cmp, and then broadcast that to the servers.
       local capabilities = require('blink.cmp').get_lsp_capabilities()
 
-      --  Add any additional override configuration in the following tables. Available keys are:
-      --  - cmd (table): Override the default command used to start the server
-      --  - filetypes (table): Override the default list of associated filetypes for the server
-      --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
-      --  - settings (table): Override the default settings passed when initializing the server.
-      --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       -- NOTE: Add servers here
+      -- `:help lspconfig-all` for a list of all the pre-configured LSPs
       local servers = {
-        -- gopls = {},
-        pyright = {},
-        clangd = {},
-        -- rust_analyzer = {},
-        -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
-        --
-        -- Some languages (like typescript) have entire language plugins that can be useful:
-        --    https://github.com/pmizio/typescript-tools.nvim
-        --
-        -- But for many setups, the LSP (`ts_ls`) will work just fine
-        ts_ls = {},
-        tailwindcss = {},
+
+        -- Python
+        basedpyright = {
+          cmd = { 'pylyzer', '--server' },
+          cmd_env = {
+            ERG_PATH = '/home/runner/.erg',
+          },
+          filetypes = { 'python' },
+          root_markers = { 'setup.py', 'tox.ini', 'requirements.txt', 'Pipfile', 'pyproject.toml', '.git' },
+          settings = {
+            python = {
+              checkOnType = false,
+              diagnostics = true,
+              inlayHints = true,
+              smartCompletion = true,
+            },
+          },
+        },
+
+        -- C/C++
+        clangd = {
+          capabilities = {
+            offsetEncoding = { 'utf-8', 'utf-16' },
+            textDocument = {
+              completion = {
+                editsNearCursor = true,
+              },
+            },
+          },
+          cmd = { 'clangd' },
+          filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda', 'proto' },
+          on_attach = { '../lsp/clangd.lua' },
+          on_init = { '../lsp/clangd.lua' },
+          root_markers = { '.clangd', '.clang-tidy', '.clang-format', 'compile_commands.json', 'compile_flags.txt', 'configure.ac', '.git' },
+        },
+
+        -- Typescipt/javascript
+        vtsls = {
+          cmd = { 'vtsls', '--stdio' },
+          filetypes = { 'javascript', 'javascriptreact', 'javascript.jsx', 'typescript', 'typescriptreact', 'typescript.tsx' },
+          root_markers = { 'tsconfig.json', 'package.json', 'jsconfig.json', '.git' },
+        },
+
+        -- Vue library
+        volar = {
+          -- add filetypes for typescript, javascript and vue
+          cmd = { 'vue-language-server', '--stdio' },
+          filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+          init_options = {
+            typescript = {
+              tsdk = '',
+            },
+          },
+          root_markers = { 'package.json' },
+        },
+
+        -- Tailwind
+        tailwindcss = {
+          cmd = { 'tailwindcss-language-server', '--stdio' },
+          filetypes = {
+            'aspnetcorerazor',
+            'astro',
+            'astro-markdown',
+            'blade',
+            'clojure',
+            'django-html',
+            'htmldjango',
+            'edge',
+            'eelixir',
+            'elixir',
+            'ejs',
+            'erb',
+            'eruby',
+            'gohtml',
+            'gohtmltmpl',
+            'haml',
+            'handlebars',
+            'hbs',
+            'html',
+            'htmlangular',
+            'html-eex',
+            'heex',
+            'jade',
+            'leaf',
+            'liquid',
+            'markdown',
+            'mdx',
+            'mustache',
+            'njk',
+            'nunjucks',
+            'php',
+            'razor',
+            'slim',
+            'twig',
+            'css',
+            'less',
+            'postcss',
+            'sass',
+            'scss',
+            'stylus',
+            'sugarss',
+            'javascript',
+            'javascriptreact',
+            'reason',
+            'rescript',
+            'typescript',
+            'typescriptreact',
+            'vue',
+            'svelte',
+            'templ',
+          },
+          before_init = '../lsp/tailwindcss.lua',
+          root_dir = '../lsp/tailwindcss.lua',
+          settings = {
+            tailwindCSS = {
+              classAttributes = { 'class', 'className', 'class:list', 'classList', 'ngClass' },
+              includeLanguages = {
+                eelixir = 'html-eex',
+                elixir = 'phoenix-heex',
+                eruby = 'erb',
+                heex = 'phoenix-heex',
+                htmlangular = 'html',
+                templ = 'html',
+              },
+              lint = {
+                cssConflict = 'warning',
+                invalidApply = 'error',
+                invalidConfigPath = 'error',
+                invalidScreen = 'error',
+                invalidTailwindDirective = 'error',
+                invalidVariant = 'error',
+                recommendedVariantOrder = 'warning',
+              },
+              validate = true,
+            },
+            workspace_required = true,
+          },
+        },
 
         lua_ls = {
           settings = {
@@ -582,6 +658,7 @@ require('lazy').setup({
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
+        'prettierd', -- Formatter for ts/js
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -682,11 +759,15 @@ require('lazy').setup({
       vim.api.nvim_set_hl(0, 'FidgetTask', { bg = 'none' })
 
       -- Line number colors
-      vim.api.nvim_set_hl(0, 'LineNr', { fg = '#FF5757', bg = 'none', italic = true })
-      vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = '#FFA98A', italic = true, bold = true })
+      vim.api.nvim_set_hl(0, 'LineNr', { fg = '#FF5757', bg = 'none', italic = false })
+      vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = '#FFA98A', italic = false, bold = true })
 
       -- Changes highlighting color (visual mode)
-      vim.api.nvim_set_hl(0, 'Visual', { bg = '#7a2b2b' })
+      vim.api.nvim_set_hl(0, 'Visual', { bg = '#7A2B2B' })
+
+      -- Configure blink.cmd appearance
+      vim.api.nvim_set_hl(0, 'BlinkCmpMenu', { bg = '#0F1419' })
+      vim.api.nvim_set_hl(0, 'BlinkCmpMenuSelection', { bg = '#7A2B2B' })
     end,
   },
 
@@ -758,11 +839,11 @@ require('lazy').setup({
   },
 
   -- require 'kickstart.plugins.debug',
-  -- require 'kickstart.plugins.indent_line',
+  require 'kickstart.plugins.indent_line',
   require 'kickstart.plugins.lint',
   require 'kickstart.plugins.autopairs',
   require 'kickstart.plugins.neo-tree',
-  -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
+  require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   --   Custom plugins
   { import = 'custom.plugins' },
@@ -790,9 +871,12 @@ require('lazy').setup({
   -- Open in Neotree if initialized in current directory (rather than file)
   vim.api.nvim_create_autocmd('VimEnter', {
     callback = function()
-      local arg = vim.fn.argv(0)
-      if arg == '.' then
-        vim.cmd 'Neotree focus current'
+      local arg = vim.fn.argv()
+      if #arg == 1 then
+        local path = arg[1]
+        if vim.fn.isdirectory(path) == 1 then
+          vim.cmd('Neotree focus current filesystem dir=' .. path)
+        end
       end
     end,
   }),
