@@ -1,5 +1,12 @@
-local home = os.getenv 'HOME'
+local home = os.getenv 'HOME' or os.getenv 'USERPROFILE'
 local workspace_path = home .. '/.local/share/nvim/jdtls-workspace/'
+
+-- Sets mason path depending on platform (unix vs win32)
+local jdtls_path = '/.local/share/nvim/mason/packages/jdtls/'
+if vim.fn.has 'win32' then
+  jdtls_path = '/AppData/Local/nvim-data/mason/packages/jdtls/'
+end
+
 local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
 local workspace_dir = workspace_path .. project_name
 
@@ -23,11 +30,11 @@ local config = {
     'java.base/java.util=ALL-UNNAMED',
     '--add-opens',
     'java.base/java.lang=ALL-UNNAMED',
-    '-javaagent:' .. home .. '/.local/share/nvim/mason/packages/jdtls/lombok.jar',
+    '-javaagent:' .. home .. jdtls_path .. 'lombok.jar',
     '-jar',
-    vim.fn.glob(home .. '/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar'),
+    vim.fn.glob(home .. jdtls_path .. '/plugins/org.eclipse.equinox.launcher_*.jar'),
     '-configuration',
-    home .. '/.local/share/nvim/mason/packages/jdtls/config_mac',
+    home .. jdtls_path .. '/config_win',
     '-data',
     workspace_dir,
   },
@@ -69,3 +76,7 @@ vim.keymap.set('v', '<leader>crv', "<Esc><Cmd>lua require('jdtls').extract_varia
 vim.keymap.set('n', '<leader>crc', "<Cmd>lua require('jdtls').extract_constant()<CR>", { desc = 'Extract Constant' })
 vim.keymap.set('v', '<leader>crc', "<Esc><Cmd>lua require('jdtls').extract_constant(true)<CR>", { desc = 'Extract Constant' })
 vim.keymap.set('v', '<leader>crm', "<Esc><Cmd>lua require('jdtls').extract_method(true)<CR>", { desc = 'Extract Method' })
+
+-- Debug
+local launcher_jar = vim.fn.glob(home .. '/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar')
+print('Launcher JAR: ', launcher_jar)

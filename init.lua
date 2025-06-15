@@ -16,6 +16,11 @@ vim.g.have_nerd_font = true
 vim.opt.number = true
 vim.opt.relativenumber = true
 
+-- FOR WINDOWS: Set shell to powershell
+if vim.fn.has 'win32' then
+  vim.o.shell = 'C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe'
+end
+
 -- Update line numbers dynamically when moving the cursor
 vim.api.nvim_create_autocmd('CursorMoved', {
   pattern = '*',
@@ -90,7 +95,7 @@ vim.g.loaded_netrwPlugin = false
 
 -- Useful Keymaps
 vim.keymap.set('n', '<leader>e', '<cmd>Neotree focus current<CR>', { desc = 'Open explorer' })
-vim.keymap.set('n', '<leader>t', '<cmd>te<CR>i', { desc = 'Open terminal in current buffer' })
+--vim.keymap.set('n', '<leader>t', '<cmd>te<CR>i', { desc = 'Open terminal in current buffer' })
 vim.keymap.set('n', '<leader>T', '<cmd>split | terminal<CR>i', { desc = 'Open terminal in new split' })
 vim.keymap.set('n', '<leader>O', '<cmd>vsplit<CR><cmd>split | terminal<CR><C-w><C-h>', { desc = 'Create simple workspace' })
 vim.keymap.set('n', '<leader>R', function()
@@ -172,7 +177,7 @@ require('lazy').setup({
     opts = {
       -- delay between pressing a key and opening which-key (milliseconds)
       -- this setting is independent of vim.opt.timeoutlen
-      delay = 0,
+      delay = 100,
       icons = {
         -- set icon mappings to true if you have a Nerd Font
         mappings = vim.g.have_nerd_font,
@@ -222,14 +227,6 @@ require('lazy').setup({
       },
     },
   },
-
-  -- NOTE: Plugins can specify dependencies.
-  --
-  -- The dependencies are proper plugin specifications as well - anything
-  -- you do for a plugin at the top level, you can do for a dependency.
-  --
-  -- Use the `dependencies` key to specify the dependencies of a particular plugin
-
   { -- LSP Plugins
     'folke/lazydev.nvim', -- For Lua and config
     ft = 'lua',
@@ -366,9 +363,6 @@ require('lazy').setup({
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
         callback = function(event)
-          -- NOTE: Remember that Lua is a real programming language, and as such it is possible
-          -- to define small helper and utility functions so you don't have to repeat yourself.
-          --
           -- In this case, we create a function that lets us more easily define mappings specific
           -- for LSP related items. It sets the mode, buffer and description for us each time.
           local map = function(keys, func, desc, mode)
@@ -537,24 +531,38 @@ require('lazy').setup({
           root_markers = { '.clangd', '.clang-tidy', '.clang-format', 'compile_commands.json', 'compile_flags.txt', 'configure.ac', '.git' },
         },
 
-        -- Typescipt/javascript
-        vtsls = {
-          cmd = { 'vtsls', '--stdio' },
-          filetypes = { 'javascript', 'javascriptreact', 'javascript.jsx', 'typescript', 'typescriptreact', 'typescript.tsx' },
-          root_markers = { 'tsconfig.json', 'package.json', 'jsconfig.json', '.git' },
+        -- HTML
+        html = {
+          cmd = { 'vscode-html-language-server', '--stdio' },
+          filetypes = { 'html', 'templ' },
+          init_options = {
+            configurationSection = { 'html', 'css', 'javascript' },
+            embeddedLanguages = {
+              css = true,
+              javascript = true,
+            },
+            provideFormatter = true,
+          },
+          root_markers = {
+            'package.json',
+            '.git',
+          },
+          settings = {},
         },
 
         -- Vue library
-        volar = {
+        vue_ls = {
           -- add filetypes for typescript, javascript and vue
           cmd = { 'vue-language-server', '--stdio' },
-          filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+          filetypes = { 'vue' },
           init_options = {
             typescript = {
               tsdk = '',
             },
           },
+          name = 'vue_ls',
           root_markers = { 'package.json' },
+          config = {},
         },
 
         -- Tailwind
@@ -657,8 +665,9 @@ require('lazy').setup({
       -- You can press `g?` for help in this menu.
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
-        'stylua', -- Used to format Lua code
-        'prettierd', -- Formatter for ts/js
+        'stylua', -- for Lua code
+        'prettierd', -- for Typescript/javascript
+        'google-java-format', -- for Java
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -680,6 +689,11 @@ require('lazy').setup({
   },
   { -- Java LSP setup
     'mfussenegger/nvim-jdtls',
+  },
+  { -- TS/JS LSP setup
+    'pmizio/typescript-tools.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
+    opts = {},
   },
   { -- Autoformat
     'stevearc/conform.nvim',
@@ -741,6 +755,7 @@ require('lazy').setup({
   -- Color Scheme
   {
     'Shatur/neovim-ayu',
+    terminal = false,
     priority = 1000, -- Make sure to load this before all the other start plugins.
     init = function()
       -- Load the colorscheme here.
@@ -839,7 +854,7 @@ require('lazy').setup({
   },
 
   -- require 'kickstart.plugins.debug',
-  require 'kickstart.plugins.indent_line',
+  -- require 'kickstart.plugins.indent_line',
   require 'kickstart.plugins.lint',
   require 'kickstart.plugins.autopairs',
   require 'kickstart.plugins.neo-tree',
