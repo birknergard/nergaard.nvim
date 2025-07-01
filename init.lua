@@ -16,19 +16,29 @@ vim.g.have_nerd_font = true
 vim.opt.number = true
 vim.opt.relativenumber = true
 
--- FOR WINDOWS: Set shell to powershell
-if vim.fn.has 'win32' then
-  vim.o.shell = 'C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe'
-end
+vim.o.termguicolors = true
 
 -- Update line numbers dynamically when moving the cursor
 vim.api.nvim_create_autocmd('CursorMoved', {
   pattern = '*',
   callback = function()
-    vim.opt.relativenumber = true
-    vim.opt.number = true
+    local buftype = vim.api.nvim_buf_get_option(0, 'buftype')
+    if buftype ~= 'terminal' then
+      vim.opt.relativenumber = true
+      vim.opt.number = true
+    end
   end,
 })
+
+vim.api.nvim_create_autocmd('TermOpen', {
+  pattern = '*',
+  callback = function()
+    vim.wo.number = false
+    vim.wo.relativenumber = false
+  end,
+})
+
+vim.o.numberwidth = 3
 
 vim.opt.mouse = 'a'
 
@@ -70,13 +80,13 @@ vim.opt.splitbelow = true
 --   See `:help 'list'`
 --   and `:help 'listchars'`
 vim.opt.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+vim.opt.listchars = { tab = '-> ', trail = '·', nbsp = '␣' }
 
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'
 
 -- Show which line your cursor is on
-vim.opt.cursorline = true
+-- vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 3
@@ -131,13 +141,16 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 --   See `:help lua-guide-autocommands`
 
 -- Highlight when yanking (copying) text
---   Try it with `yap` in normal mode
---   See `:help vim.highlight.on_yank()`
+--vim.api.nvim_set_hl(0, 'YankHighlightColor', { bg = '#f07178' })
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
   callback = function()
-    vim.hl.on_yank()
+    vim.highlight.on_yank {
+      higroup = 'YankHighlightColor',
+      timeout = 150,
+      on_visual = true,
+    }
   end,
 })
 
@@ -316,7 +329,6 @@ require('lazy').setup({
     dependencies = {
       -- Automatically install LSPs and related tools to stdpath for Neovim
       -- Mason must be loaded before its dependents so we need to set it up here.
-      -- NOTE: `opts = {}` is the same as calling `require('mason').setup({})`
       { 'mason-org/mason.nvim', opts = {} },
       'mason-org/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
@@ -648,6 +660,7 @@ require('lazy').setup({
           },
         },
 
+        -- Lua
         lua_ls = {
           settings = {
             Lua = {
@@ -752,7 +765,51 @@ require('lazy').setup({
     },
   },
 
-  -- Color Scheme
+  -- Color Schemes
+  --[[
+  {
+    'olivercederborg/poimandres.nvim',
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require('poimandres').setup {
+        -- leave this setup function empty for default config
+        -- or refer to the configuration section
+        -- for configuration options
+      }
+      -- Transparent background
+      vim.api.nvim_set_hl(0, 'Normal', { bg = 'none', blend = 10 })
+      vim.api.nvim_set_hl(0, 'NormalNC', { bg = 'none', blend = 10 })
+      vim.api.nvim_set_hl(0, 'EndOfBuffer', { bg = 'none', blend = 10 })
+      vim.api.nvim_set_hl(0, 'SignColumn', { bg = 'none', blend = 10 })
+      vim.api.nvim_set_hl(0, 'FidgetTitle', { bg = 'none' })
+      vim.api.nvim_set_hl(0, 'FidgetTask', { bg = 'none' })
+
+      -- Line number colors
+      -- vim.api.nvim_set_hl(0, 'LineNr', { fg = '#FF5757', bg = 'none', italic = false })
+      -- vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = '#FFA98A', italic = false, bold = true })
+
+      -- Changes highlighting color (visual mode)
+      vim.api.nvim_set_hl(0, 'Visual', { bg = '#7A2B2B' })
+
+      -- Configure blink.cmd appearance
+      vim.api.nvim_set_hl(0, 'BlinkCmpMenu', { bg = '#0F1419' })
+      vim.api.nvim_set_hl(0, 'BlinkCmpMenuSelection', { bg = '#7A2B2B' })
+
+      -- Yank highlight text
+      vim.api.nvim_set_hl(0, 'YankHighlightColor', {
+        bg = '#f07178',
+        fg = '#ffffff', -- text
+        bold = true,
+      })
+    end,
+
+    -- optionally set the colorscheme within lazy config
+    init = function()
+      vim.cmd 'colorscheme poimandres'
+    end,
+  },
+  ]]
   {
     'Shatur/neovim-ayu',
     terminal = false,
@@ -764,39 +821,68 @@ require('lazy').setup({
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
       vim.cmd.colorscheme 'ayu-dark'
-
-      -- Transparent background
-      vim.api.nvim_set_hl(0, 'Normal', { bg = 'none', blend = 10 })
-      vim.api.nvim_set_hl(0, 'NormalNC', { bg = 'none', blend = 10 })
-      vim.api.nvim_set_hl(0, 'EndOfBuffer', { bg = 'none', blend = 10 })
-      vim.api.nvim_set_hl(0, 'SignColumn', { bg = 'none', blend = 10 })
-      vim.api.nvim_set_hl(0, 'FidgetTitle', { bg = 'none' })
-      vim.api.nvim_set_hl(0, 'FidgetTask', { bg = 'none' })
-
-      -- Line number colors
-      vim.api.nvim_set_hl(0, 'LineNr', { fg = '#FF5757', bg = 'none', italic = false })
-      vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = '#FFA98A', italic = false, bold = true })
-
-      -- Changes highlighting color (visual mode)
-      vim.api.nvim_set_hl(0, 'Visual', { bg = '#7A2B2B' })
-
-      -- Configure blink.cmd appearance
-      vim.api.nvim_set_hl(0, 'BlinkCmpMenu', { bg = '#0F1419' })
-      vim.api.nvim_set_hl(0, 'BlinkCmpMenuSelection', { bg = '#7A2B2B' })
     end,
   },
 
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
+  {
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons', opt = true },
+    config = function()
+      local ayu = require 'lualine.themes.ayu'
 
+      -- Save default Ayu background (used in a/z)
+      local default_bg = ayu.normal.a.bg
+      local default_fg = ayu.normal.a.fg
+
+      -- Make all sections except 'a' and 'z' transparent in active modes
+      for _, mode in pairs(ayu) do
+        for _, section in ipairs { 'b', 'c', 'x', 'y' } do
+          if mode[section] then
+            mode[section].bg = 'none'
+          end
+        end
+      end
+
+      -- Transparent inactive windows (all sections)
+      ayu.inactive.a.bg = 'none'
+      ayu.inactive.b.bg = 'none'
+      ayu.inactive.c.bg = 'none'
+
+      -- Optional: dim inactive fg
+      ayu.inactive.a.fg = '#666666'
+      ayu.inactive.b.fg = '#666666'
+      ayu.inactive.c.fg = '#666666'
+
+      -- Restore 'z' background to default (in case your theme has changed it)
+      for _, mode in pairs(ayu) do
+        if mode.z then
+          mode.z.bg = default_bg
+          mode.z.fg = default_fg
+        end
+      end
+
+      -- Setup lualine with custom theme
+      require('lualine').setup {
+        options = {
+          theme = ayu,
+        },
+      }
+
+      -- Override global highlights to ensure transparency works
+      vim.cmd [[
+        hi StatusLine guibg=NONE ctermbg=NONE
+        hi StatusLineNC guibg=NONE ctermbg=NONE
+      ]]
+    end,
+  },
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
     config = function()
       -- Simple and easy statusline.
-      --   You could remove this setup call if you don't like it,
-      --   and try some other statusline plugin
+      --[[
       local statusline = require 'mini.statusline'
-      -- set use_icons to true if you have a Nerd Font
       statusline.setup { use_icons = vim.g.have_nerd_font }
 
       -- You can configure sections in the statusline by overriding their
@@ -806,6 +892,7 @@ require('lazy').setup({
       statusline.section_location = function()
         return '%2l:%-2v'
       end
+      ]]
 
       -- ... and there is more!
       --   Check out: https://github.com/echasnovski/mini.nvim
@@ -895,6 +982,42 @@ require('lazy').setup({
       end
     end,
   }),
+})
+
+-- Transparent background
+vim.api.nvim_set_hl(0, 'Normal', { bg = 'none', blend = 10 })
+vim.api.nvim_set_hl(0, 'NormalNC', { bg = 'none', blend = 10 })
+vim.api.nvim_set_hl(0, 'EndOfBuffer', { bg = 'none', blend = 10 })
+vim.api.nvim_set_hl(0, 'SignColumn', { bg = 'none', blend = 10 })
+vim.api.nvim_set_hl(0, 'FidgetTitle', { bg = 'none' })
+vim.api.nvim_set_hl(0, 'FidgetTask', { bg = 'none' })
+
+-- Remove black line in split center
+vim.api.nvim_set_hl(0, 'VertSplit', { bg = 'NONE', fg = 'NONE' })
+vim.opt.fillchars:append { vert = ' ' }
+
+-- Yank highlight text
+vim.api.nvim_set_hl(0, 'YankHighlightColor', {
+  bg = '#f07178',
+  fg = '#ffffff', -- text
+  bold = true,
+})
+-- Line number colors
+vim.api.nvim_set_hl(0, 'LineNr', { fg = '#FF5757', bg = 'none', italic = false })
+vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = '#FFA98A', italic = false, bold = true })
+
+-- Changes highlighting color (visual mode)
+vim.api.nvim_set_hl(0, 'Visual', { bg = '#7A2B2B' })
+
+-- Configure blink.cmd appearance
+vim.api.nvim_set_hl(0, 'BlinkCmpMenu', { bg = '#0F1419' })
+vim.api.nvim_set_hl(0, 'BlinkCmpMenuSelection', { bg = '#7A2B2B' })
+
+-- Yank highlight text
+vim.api.nvim_set_hl(0, 'YankHighlightColor', {
+  bg = '#f07178',
+  fg = '#ffffff', -- text
+  bold = true,
 })
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
