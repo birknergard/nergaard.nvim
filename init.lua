@@ -16,8 +16,6 @@ vim.g.have_nerd_font = true
 vim.opt.number = true
 vim.opt.relativenumber = true
 
-vim.o.termguicolors = true
-
 -- Update line numbers dynamically when moving the cursor
 vim.api.nvim_create_autocmd('CursorMoved', {
   pattern = '*',
@@ -33,14 +31,13 @@ vim.api.nvim_create_autocmd('CursorMoved', {
 vim.api.nvim_create_autocmd('TermOpen', {
   pattern = '*',
   callback = function()
-    vim.wo.number = false
-    vim.wo.relativenumber = false
+    vim.opt.number = false
+    vim.opt.relativenumber = false
   end,
 })
 
-vim.o.numberwidth = 3
-
 vim.opt.mouse = 'a'
+vim.o.numberwidth = 4
 
 -- Indent settings
 vim.opt.expandtab = true
@@ -81,6 +78,7 @@ vim.opt.splitbelow = true
 --   and `:help 'listchars'`
 vim.opt.list = true
 vim.opt.listchars = { tab = '-> ', trail = '·', nbsp = '␣' }
+vim.opt.fillchars:append { eob = ' ' }
 
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'
@@ -949,6 +947,7 @@ require('lazy').setup({
 
   --   Custom plugins
   { import = 'custom.plugins' },
+  { 'christoomey/vim-tmux-navigator' },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the

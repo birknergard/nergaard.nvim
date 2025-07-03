@@ -35,7 +35,7 @@ local config = {
     '-data',
     workspace_dir,
   },
-  root_dir = require('jdtls.setup').find_root { '.git', 'mvnw', 'gradlew', 'pom.xml', 'build.gradle' },
+  root_dir = require('jdtls.setup').find_root { 'pom.xml', 'mvnw', 'gradlew', 'build.gradle', '.git' },
 
   settings = {
     java = {
