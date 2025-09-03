@@ -206,14 +206,15 @@ return {
 
       -- Load servers
       local servers = {
-        eslint = require 'plugins.major.lsp.servers.eslint',
+        -- eslint = require 'plugins.major.lsp.servers.eslint',
+        vtsls = require 'plugins.major.lsp.servers.ts',
         pyright = require 'plugins.major.lsp.servers.pyright',
         vue_ls = require 'plugins.major.lsp.servers.vue-ls',
         tailwindcss = require 'plugins.major.lsp.servers.tailwindcss',
         html = require 'plugins.major.lsp.servers.html',
         lua_ls = require 'plugins.major.lsp.servers.lua-ls',
-        --sourcekit = require 'plugins.major.lsp.servers.sourcekit',
         clang = require 'plugins.major.lsp.servers.clang',
+        bashls = require 'plugins.major.lsp.servers.bash',
       }
 
       local ensure_installed = vim.tbl_keys(servers or {})
@@ -239,7 +240,7 @@ return {
         },
       }
 
-      -- Manually set up sourcekit
+      -- Manually set up sourcekit, since it is not available in Mason
       require('lspconfig').sourcekit.setup {
         cmd = { 'sourcekit-lsp' },
         filetypes = { 'swift' },

@@ -9,18 +9,6 @@ vim.g.have_nerd_font = true
 vim.opt.number = true
 vim.opt.relativenumber = true
 
--- Update line numbers dynamically when moving the cursor
-vim.api.nvim_create_autocmd('CursorMoved', {
-  pattern = '*',
-  callback = function()
-    local buftype = vim.api.nvim_buf_get_option(0, 'buftype')
-    if buftype ~= 'terminal' then
-      vim.opt.relativenumber = true
-      vim.opt.number = true
-    end
-  end,
-})
-
 vim.api.nvim_create_autocmd('TermOpen', {
   pattern = '*',
   callback = function()
@@ -120,11 +108,12 @@ end, { noremap = true, silent = true, desc = 'Replace all occurences of pattern 
 
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
--- TIP: Disable arrow keys in normal mode
+--[[ Disables arrow keys in normal mode
 vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
 vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
 vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
 vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
+]]
 
 -- Keybinds to make split navigation easier.
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
@@ -176,7 +165,10 @@ require('lazy').setup({
   require 'plugins.minor.neo-tree',
   require 'plugins.minor.gitsigns',
   -- require 'kickstart.plugins.debug',
-  require 'plugins.minor.indent_line',
+  -- require 'plugins.minor.indent_line',
+  require 'plugins.minor.surround',
+  require 'plugins.minor.snacks',
+  require 'plugins.minor.colorizer',
   require 'plugins.minor.misc',
 }, {
   ui = {
@@ -212,8 +204,7 @@ require('lazy').setup({
     end,
   }),
 })
-
--- Transparent background
+--[[ Transparent background 
 vim.api.nvim_set_hl(0, 'Normal', { bg = 'none', blend = 10 })
 vim.api.nvim_set_hl(0, 'NormalNC', { bg = 'none', blend = 10 })
 vim.api.nvim_set_hl(0, 'EndOfBuffer', { bg = 'none', blend = 10 })
@@ -248,7 +239,10 @@ vim.api.nvim_set_hl(0, 'YankHighlightColor', {
   bg = '#f07178',
   fg = '#ffffff', -- text
   bold = true,
-})
+}) ]]
+
+-- Manually set fillchars and blend if needed (these are not part of ayu's overrides)
+vim.opt.fillchars:append { vert = ' ' }
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

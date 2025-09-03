@@ -5,10 +5,6 @@ return {
     dependencies = { 'nvim-lua/plenary.nvim' },
     opts = { signs = false },
   },
-  { -- Zen mode
-    'folke/zen-mode.nvim',
-    opts = {},
-  },
   { -- Extended webicons
     'nvim-tree/nvim-web-devicons',
     opts = {},
@@ -38,16 +34,6 @@ return {
 
       -- ... and there is more!
       --   Check out: https://github.com/echasnovski/mini.nvim
-    end,
-  },
-  { -- Plugin for handling surrounding
-    'kylechui/nvim-surround',
-    version = '*', -- Use for stability; omit to use `main` branch for the latest features
-    event = 'VeryLazy', -- Load the plugin very late to avoid startup impact
-    config = function()
-      require('nvim-surround').setup {
-        -- Optional: Customize keymaps or other settings here
-      }
     end,
   },
 }
