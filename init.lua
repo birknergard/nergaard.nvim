@@ -82,9 +82,6 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 vim.g.loaded_netrw = false
 vim.g.loaded_netrwPlugin = false
 
--- Useful Keymaps
-vim.keymap.set('n', '<leader>e', '<cmd>Neotree focus current<CR>', { desc = 'Open N[e]otree' })
-
 -- Opens terminal in directory of current buffer
 vim.keymap.set('n', '<leader>T', function()
   vim.cmd 'split'
@@ -158,6 +155,7 @@ require('lazy').setup({
   require 'plugins.major.treesitter',
   require 'plugins.major.autoformat',
   require 'plugins.major.xcodebuild',
+  require 'plugins.major.neotree',
 
   -- Minor plugins
   require 'plugins.minor.lint',
