@@ -9,10 +9,7 @@ return {
     },
     lazy = false, -- neo-tree will lazily load itself
     config = function()
-      -- Neotree keymaps
-      vim.keymap.set('n', '<leader>ee', '<cmd>Neotree toggle right filesystem<CR>', { desc = 'Open file explorer' })
-      vim.keymap.set('n', '<leader>eb', '<cmd>Neotree toggle right buffers<CR>', { desc = 'Open buffer explorer' })
-      vim.keymap.set('n', '<leader>eg', '<cmd>Neotree toggle right git_status<CR>', { desc = 'Open git_status view' })
+      vim.keymap.set('n', '<leader>e', '<cmd>Neotree toggle right filesystem<CR>', { desc = 'Open file explorer' })
     end,
   },
 }
