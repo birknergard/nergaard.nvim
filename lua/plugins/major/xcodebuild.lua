@@ -1,7 +1,5 @@
 return {
-  {
-    'MunifTanjim/nui.nvim',
-  },
+  { 'MunifTanjim/nui.nvim' },
   {
     'wojciech-kulik/xcodebuild.nvim',
     dependencies = {

@@ -3,7 +3,7 @@ return { -- Color Schemes
   priority = 1000, -- Make sure to load this before all the other start plugins.
   config = function()
     require('ayu').setup {
-      mirage = true, -- Optional: set to true to use the mirage theme variant
+      mirage = false, -- Optional: set to true to use the mirage theme variant
       overrides = {
         -- Transparent background settings
         Normal = { bg = 'none' },
@@ -17,8 +17,7 @@ return { -- Color Schemes
         VertSplit = { bg = 'none', fg = 'none' },
 
         -- Line number colors
-        LineNr = { fg = '#FF5757', bg = 'none', italic = false, bold = false },
-        CursorLineNr = { fg = '#FF598A', italic = false, bold = true },
+        LineNr = { fg = '#ff8074', bg = 'none', italic = false, bold = false },
 
         -- Changes highlighting color (visual mode)
         Visual = { bg = '#7A2B2B' },
@@ -34,6 +33,7 @@ return { -- Color Schemes
           bold = true,
         },
         ['@lsp.type.method.java'] = { fg = '#F07178' },
+        ['@function.declaration'] = { fg = '#FF8721' },
       },
     }
     vim.cmd.colorscheme 'ayu-dark'
