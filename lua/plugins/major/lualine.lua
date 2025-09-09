@@ -40,6 +40,12 @@ return {
       options = {
         theme = ayu,
       },
+      disabled_filetypes = {
+        'neo-tree',
+        'NvimTree',
+        'Outline',
+        'packer',
+      },
     }
 
     -- Override global highlights to ensure transparency works

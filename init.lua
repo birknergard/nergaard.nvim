@@ -150,24 +150,26 @@ require('lazy').setup({
   require 'plugins.major.which_key',
   require 'plugins.major.lsp.plugins',
   require 'plugins.major.lsp.setup',
-  require 'plugins.major.colorscheme',
-  require 'plugins.major.statusbar',
+  require 'plugins.major.lualine',
   require 'plugins.major.treesitter',
   require 'plugins.major.autoformat',
   require 'plugins.major.xcodebuild',
   require 'plugins.major.neotree',
+  -- require 'plugins.major.debug',
 
   -- Minor plugins
-  require 'plugins.minor.lint',
   require 'plugins.minor.autopairs',
   require 'plugins.minor.neo-tree',
   require 'plugins.minor.gitsigns',
-  -- require 'kickstart.plugins.debug',
+  -- require 'plugins.minor.lint',
   -- require 'plugins.minor.indent_line',
   require 'plugins.minor.surround',
   require 'plugins.minor.snacks',
   require 'plugins.minor.colorizer',
   require 'plugins.minor.misc',
+
+  -- Load color scheme last
+  require 'plugins.major.colorscheme',
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
@@ -202,45 +204,9 @@ require('lazy').setup({
     end,
   }),
 })
---[[ Transparent background 
-vim.api.nvim_set_hl(0, 'Normal', { bg = 'none', blend = 10 })
-vim.api.nvim_set_hl(0, 'NormalNC', { bg = 'none', blend = 10 })
-vim.api.nvim_set_hl(0, 'EndOfBuffer', { bg = 'none', blend = 10 })
-vim.api.nvim_set_hl(0, 'SignColumn', { bg = 'none', blend = 10 })
-vim.api.nvim_set_hl(0, 'FidgetTitle', { bg = 'none' })
-vim.api.nvim_set_hl(0, 'FidgetTask', { bg = 'none' })
 
--- Remove black line in split center
-vim.api.nvim_set_hl(0, 'VertSplit', { bg = 'none', fg = 'none' })
-vim.opt.fillchars:append { vert = ' ' }
-
--- Yank highlight text
-vim.api.nvim_set_hl(0, 'YankHighlightColor', {
-  bg = '#f07178',
-  fg = '#ffffff', -- text
-  bold = true,
-})
-
--- Line number colors
-vim.api.nvim_set_hl(0, 'LineNr', { fg = '#FF5757', bg = 'none', italic = false, bold = false })
-vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = '#FF598A', italic = false, bold = true })
-
--- Changes highlighting color (visual mode)
-vim.api.nvim_set_hl(0, 'Visual', { bg = '#7A2B2B' })
-
--- Configure blink.cmd appearance
-vim.api.nvim_set_hl(0, 'BlinkCmpMenu', { bg = '#0F1419' })
-vim.api.nvim_set_hl(0, 'BlinkCmpMenuSelection', { bg = '#7A2B2B' })
-
--- Yank highlight text
-vim.api.nvim_set_hl(0, 'YankHighlightColor', {
-  bg = '#f07178',
-  fg = '#ffffff', -- text
-  bold = true,
-}) ]]
-
--- Manually set fillchars and blend if needed (these are not part of ayu's overrides)
-vim.opt.fillchars:append { vert = ' ' }
+-- For Neovim 0.5+ (WinSeparator overrides VertSplit)
+vim.cmd [[highlight WinSeparator guifg=#0e1018 guibg=NONE]]
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

@@ -13,12 +13,8 @@ return { -- Color Schemes
         FidgetTitle = { bg = 'none' },
         FidgetTask = { bg = 'none' },
 
-        -- Remove black line in split center
-        VertSplit = { bg = 'none', fg = 'none' },
-
         -- Line number colors
         LineNr = { fg = '#ff8074', bg = 'none', italic = false, bold = false },
-
         -- Changes highlighting color (visual mode)
         Visual = { bg = '#7A2B2B' },
 
