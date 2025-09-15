@@ -19,9 +19,6 @@ return {
         },
       },
     },
-    { -- Neovim jdtls
-      'mfussenegger/nvim-jdtls',
-    },
     { -- Allows extra capabilities provided by blink.cmp
       'saghen/blink.cmp',
       build = 'cargo build --release',
@@ -245,6 +242,9 @@ return {
         end,
       },
     }
+
+    -- Load JDTLS separately, because java
+    require 'plugins.major.lsp.servers.jdtls'
 
     -- Manually set up sourcekit, since it is not available in Mason
     require('lspconfig').sourcekit.setup {

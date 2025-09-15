@@ -30,6 +30,11 @@ return { -- Color Schemes
         },
         ['@lsp.type.method.java'] = { fg = '#F07178' },
         ['@function.declaration'] = { fg = '#FF8721' },
+
+        TreesitterContext = {
+          fg = '#ff8074',
+          bg = '#10151d',
+        },
       },
     }
     vim.cmd.colorscheme 'ayu-dark'

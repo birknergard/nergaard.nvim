@@ -20,10 +20,9 @@ return {
     },
     config = function()
       local width = get_neotree_width()
-      vim.keymap.set('n', '<leader>E', '<cmd>Neotree toggle right<CR>', {
+      vim.keymap.set('n', '<leader>e', '<cmd>Neotree toggle right<CR>', {
         desc = 'Open/focus file explorer',
       })
-      vim.keymap.set('n', '<leader>e', '<cmd>Neotree focus right<CR>')
 
       -- Auto resize Neo-tree when Vim is resized
       vim.api.nvim_create_autocmd('VimResized', {

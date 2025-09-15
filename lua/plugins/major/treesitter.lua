@@ -20,6 +20,8 @@ return { -- Highlight, edit, and navigate code
       'cpp',
       'typescript',
       'javascript',
+      'css',
+      'yaml',
     },
     -- Autoinstall languages that are not installed
     auto_install = true,

@@ -86,7 +86,7 @@ vim.g.loaded_netrwPlugin = false
 vim.keymap.set('n', '<leader>T', function()
   vim.cmd 'split'
   vim.cmd ':cd %:p:h | terminal'
-end, { desc = 'Open explorer' })
+end, { desc = 'Open terminal in current dir' })
 
 -- Search and replace for whole file
 vim.keymap.set('n', '<leader>Ra', function()
@@ -166,6 +166,7 @@ require('lazy').setup({
   require 'plugins.minor.surround',
   require 'plugins.minor.snacks',
   require 'plugins.minor.colorizer',
+  require 'plugins.minor.context',
   require 'plugins.minor.misc',
 
   -- Load color scheme last
