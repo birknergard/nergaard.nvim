@@ -38,13 +38,13 @@ return {
     -- Setup lualine with custom theme
     require('lualine').setup {
       options = {
+        disabled_filetypes = {
+          statusline = { 'neo-tree', 'Outline', 'packer' },
+          winbar = { 'neo-tree', 'Outline', 'packer' },
+        },
+        always_show_tabline = true,
+        always_divide_middle = true,
         theme = ayu,
-      },
-      disabled_filetypes = {
-        'neo-tree',
-        'NvimTree',
-        'Outline',
-        'packer',
       },
     }
 

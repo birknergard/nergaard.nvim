@@ -23,9 +23,9 @@ return { -- Color Schemes
         BlinkCmpMenuSelection = { bg = '#7A2B2B' },
 
         -- Yank highlight
-        YankHighlight = {
-          bg = '#f07178',
-          fg = '#ffffff', -- text
+        YankHighlightColor = {
+          bg = '#a32b31',
+          -- fg = '#ffffff', -- text
           bold = true,
         },
         ['@lsp.type.method.java'] = { fg = '#F07178' },

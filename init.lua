@@ -17,6 +17,9 @@ vim.api.nvim_create_autocmd('TermOpen', {
   end,
 })
 
+-- Makes overwriting text in visual mode not save overwritten text to buffer
+vim.keymap.set('x', 'p', [["_dP]], { noremap = true, silent = true })
+
 vim.opt.mouse = 'a'
 vim.o.numberwidth = 4
 
