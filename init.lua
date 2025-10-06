@@ -8,7 +8,7 @@ vim.g.have_nerd_font = true
 -- Make line numbers default
 vim.opt.number = true
 vim.opt.relativenumber = true
-
+vim.opt.wrap = false
 vim.api.nvim_create_autocmd('TermOpen', {
   pattern = '*',
   callback = function()
@@ -17,7 +17,7 @@ vim.api.nvim_create_autocmd('TermOpen', {
   end,
 })
 
--- Makes overwriting text in visual mode not save overwritten text to buffer
+-- Overwriting text in sends deleted text to void register
 vim.keymap.set('x', 'p', [["_dP]], { noremap = true, silent = true })
 
 vim.opt.mouse = 'a'
@@ -48,7 +48,7 @@ vim.opt.breakindent = false
 vim.opt.signcolumn = 'yes'
 
 -- Decrease update time
-vim.opt.updatetime = 250
+vim.opt.updatetime = 50
 
 -- Decrease mapped sequence wait time
 vim.opt.timeoutlen = 300
@@ -56,6 +56,7 @@ vim.opt.timeoutlen = 300
 -- Configure how new splits should be opened
 vim.opt.splitright = true
 vim.opt.splitbelow = true
+vim.opt.winborder = 'rounded'
 
 -- Sets how neovim will display certain whitespace characters in the editor.
 --   See `:help 'list'`

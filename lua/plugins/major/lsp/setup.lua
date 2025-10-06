@@ -204,7 +204,7 @@ return {
       -- eslint = require 'plugins.major.lsp.servers.eslint',
       vtsls = require 'plugins.major.lsp.servers.ts',
       basedpyright = require 'plugins.major.lsp.servers.basedpyright',
-      vue_ls = require 'plugins.major.lsp.servers.vue-ls',
+      -- vue_ls = require 'plugins.major.lsp.servers.vue-ls',
       tailwindcss = require 'plugins.major.lsp.servers.tailwindcss',
       html = require 'plugins.major.lsp.servers.html',
       lua_ls = require 'plugins.major.lsp.servers.lua-ls',

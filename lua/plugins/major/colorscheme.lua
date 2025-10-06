@@ -7,6 +7,9 @@ return { -- Color Schemes
       overrides = {
         -- Transparent background settings
         Normal = { bg = 'none' },
+        NormalFloat = { bg = 'none' },
+        Pmenu = { bg = 'none' },
+        FloatBorder = { bg = 'none' },
         NormalNC = { bg = 'none' },
         EndOfBuffer = { bg = 'none' },
         SignColumn = { bg = 'none' },
@@ -19,13 +22,13 @@ return { -- Color Schemes
         Visual = { bg = '#7A2B2B' },
 
         -- Configure BlinkCmp appearance
-        BlinkCmpMenu = { bg = '#0F1419' },
+        BlinkCmpMenu = { bg = 'none' },
         BlinkCmpMenuSelection = { bg = '#7A2B2B' },
 
         -- Yank highlight
         YankHighlightColor = {
           bg = '#a32b31',
-          -- fg = '#ffffff', -- text
+          fg = '#ffffff', -- text
           bold = true,
         },
         ['@lsp.type.method.java'] = { fg = '#F07178' },
