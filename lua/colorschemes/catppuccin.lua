@@ -1,0 +1,151 @@
+--return {
+--  'catppuccin/nvim',
+--  name = 'catppuccin',
+--  priority = 1000,
+--  opts = {
+--    flavour = 'mocha', -- latte, frappe, macchiato, mocha
+--    background = {     -- :h background
+--      light = 'latte',
+--      dark = 'mocha',
+--    },
+--    transparent_background = true, -- disables setting the background color.
+--    float = {
+--      transparent = false,         -- enable transparent floating windows
+--      solid = false,               -- use solid styling for floating windows, see |winborder|
+--    },
+--    show_end_of_buffer = false,    -- shows the '~' characters after the end of buffers
+--    term_colors = false,           -- sets terminal colors (e.g. `g:terminal_color_0`)
+--    dim_inactive = {
+--      enabled = false,             -- dims the background color of inactive window
+--      shade = 'dark',
+--      percentage = 0.15,           -- percentage of the shade to apply to the inactive window
+--    },
+--    no_italic = false,             -- Force no italic
+--    no_bold = false,               -- Force no bold
+--    no_underline = false,          -- Force no underline
+--    styles = {                     -- Handles the styles of general hi groups (see `:h highlight-args`):
+--      comments = { 'italic' },     -- Change the style of comments
+--      conditionals = { 'italic' },
+--      loops = {},
+--      functions = {},
+--      keywords = {},
+--      strings = {},
+--      variables = {},
+--      numbers = {},
+--      booleans = {},
+--      properties = {},
+--      types = {},
+--      operators = {},
+--      -- miscs = {}, -- Uncomment to turn off hard-coded styles
+--    },
+--    lsp_styles = { -- Handles the style of specific lsp hl groups (see `:h lsp-highlight`).
+--      virtual_text = {
+--        errors = { 'italic' },
+--        hints = { 'italic' },
+--        warnings = { 'italic' },
+--        information = { 'italic' },
+--        ok = { 'italic' },
+--      },
+--      underlines = {
+--        errors = { 'underline' },
+--        hints = { 'underline' },
+--        warnings = { 'underline' },
+--        information = { 'underline' },
+--        ok = { 'underline' },
+--      },
+--      inlay_hints = {
+--        background = true,
+--      },
+--    },
+--    color_overrides = {
+--      --[[ defaults
+--      rosewater = "#f5e0dc",
+--      flamingo = "#f2cdcd",
+--      pink = "#f5c2e7",
+--      mauve = "#cba6f7",
+--      red = "#f38ba8",
+--      maroon = "#eba0ac",
+--      peach = "#fab387",
+--      yellow = "#f9e2af",
+--      green = "#a6e3a1",
+--      teal = "#94e2d5",
+--      sky = "#89dceb",
+--      sapphire = "#74c7ec",
+--      blue = "#89b4fa",
+--      lavender = "#b4befe",
+--      text = "#cdd6f4",
+--      subtext1 = "#bac2de",
+--      subtext0 = "#a6adc8",
+--      overlay2 = "#9399b2",
+--      overlay1 = "#7f849c",
+--      overlay0 = "#6c7086",
+--      surface2 = "#585b70",
+--      surface1 = "#45475a",
+--      surface0 = "#313244",
+--      base = "#1e1e2e",
+--      mantle = "#181825",
+--      crust = "#11111b",
+--      --]]
+--      latte = {
+--
+--      },
+--      mocha = {
+--        rosewater = "#89dceb",
+--        flamingo = "#ff6565",
+--        pink = "#95E6CB",
+--        mauve = "#FFB454",
+--        red = "#ff6565",
+--        maroon = "#FFB454",
+--        peach = "#FF8F40",
+--        yellow = "#FFB454",
+--        green = "#AAD94C",
+--        teal = "#95E6CB",
+--        sky = "#89dceb",
+--        sapphire = "#59C2FF",
+--        blue = "#39BAE6",
+--        lavender = "#FF8F40",
+--        text = "#bfbdb6",
+--        subtext1 = "#bac2b6",
+--        subtext0 = "#a6adb6",
+--        overlay2 = "#9399b6",
+--        overlay1 = "#7f84b6",
+--        overlay0 = "#6c7066",
+--        surface2 = "#6c7066",
+--        surface1 = "#6c7066",
+--        surface0 = "#6c7066",
+--        base = "#6c7066",
+--        mantle = "#6c7066",
+--        crust = "#6c7066",
+--      }
+--      --[[
+--      ]]
+--    },
+--    custom_highlights = {
+--      -- Transparent background settings
+--      Normal = { bg = 'none' },
+--      NormalFloat = { bg = 'none' },
+--      Pmenu = { bg = 'none' },
+--      FloatBorder = { bg = 'none' },
+--      NormalNC = { bg = 'none' },
+--      EndOfBuffer = { bg = 'none' },
+--      SignColumn = { bg = 'none' },
+--      FidgetTitle = { bg = 'none' },
+--      FidgetTask = { bg = 'none' },
+--      BlinkCmpMenu = { bg = 'none' },
+--    },
+--
+--    default_integrations = true,
+--    auto_integrations = false,
+--    integrations = {
+--      cmp = true,
+--      gitsigns = true,
+--      nvimtree = true,
+--      notify = false,
+--      mini = {
+--        enabled = true,
+--        indentscope_color = '',
+--      },
+--      -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
+--    },
+--  },
+--}

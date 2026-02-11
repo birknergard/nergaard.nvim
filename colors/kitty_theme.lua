@@ -1,0 +1,195 @@
+-------------------------------------------------------------------------------
+----  Neovim Colorscheme That Reads Colors Directly From:
+----      ~/.config/kitty/current_theme.conf
+-------------------------------------------------------------------------------
+--
+--local theme_file = vim.fn.expand '~/.config/kitty/current-theme.conf'
+--
+--local function read_kitty_colors(path)
+--  local colors = {}
+--  local file = io.open(path, 'r')
+--  if not file then
+--    vim.notify('Kitty theme file not found: ' .. path, vim.log.levels.ERROR)
+--    return colors
+--  end
+--
+--  for line in file:lines() do
+--    -- matches:  key   #RRGGBB
+--    local key, value = line:match '^(%S+)%s+(#%x+)$'
+--    if key and value then
+--      print(key .. ' - ' .. value)
+--      colors[key] = value
+--    end
+--  end
+--
+--  file:close()
+--  return colors
+--end
+--
+--local C = read_kitty_colors(theme_file)
+--
+--if not C.background or not C.foreground then
+--  vim.notify('Invalid Kitty theme (missing background/foreground)', vim.log.levels.ERROR)
+--end
+--
+----- HELPER -------------------------------------------------------------------
+--
+--vim.cmd 'highlight clear'
+--vim.opt.termguicolors = true
+--
+--local function HL(group, opts)
+--  vim.api.nvim_set_hl(0, group, opts)
+--end
+--
+---- Shorten names for terminal palette
+--local p = C
+--
+-----------------------------------------------------------------------------
+---- AYU-DARK-LIKE MAPPING (uses your Kitty palette)
+----  semantic → kitty-color
+----
+----  Ayu style categories:
+----  - background: very dark
+----  - comments: soft gray
+----  - strings: soft green/teal
+----  - numbers: yellow/orange
+----  - keywords: vivid orange
+----  - functions: cool blue
+----  - types: cool blue-gray
+----  - variables: normal foreground
+----  - selections: slightly brighter background
+-----------------------------------------------------------------------------
+--
+---- Use kitty colors semantically (user’s palette)
+--local bg = p.background
+--local fg = p.foreground
+--local comment = p.color8
+--local accent = p.color4 -- blue-ish
+--local warning = p.color3
+--local errorc = p.color1
+--local stringc = p.color2 -- green-ish
+--local keyword = p.color1 -- Ayu uses orange; pick your palette’s “warmest”
+--local numberc = p.color5 -- usually yellow-ish
+--local typec = p.color6 -- cool-ish
+--local func = p.color4 -- blue
+--local selectb = p.color0 -- slightly brighter background
+--
+-----------------------------------------------------------------------------
+---- Base UI
+-----------------------------------------------------------------------------
+--
+--HL('Normal', { fg = fg, bg = bg })
+--HL('CursorLine', { bg = selectb })
+--HL('CursorColumn', { bg = selectb })
+--HL('Visual', { bg = p.color0 }) -- brightened selection
+--HL('LineNr', { fg = comment })
+--HL('CursorLineNr', { fg = accent })
+--HL('NonText', { fg = comment })
+--HL('StatusLine', { fg = fg, bg = selectb })
+--HL('StatusLineNC', { fg = comment, bg = selectb })
+--HL('Pmenu', { fg = fg, bg = selectb })
+--HL('PmenuSel', { fg = bg, bg = accent, bold = true })
+--
+-----------------------------------------------------------------------------
+---- Comments & text
+-----------------------------------------------------------------------------
+--
+--HL('Comment', { fg = comment, italic = true })
+--
+-----------------------------------------------------------------------------
+---- Strings, constants
+-----------------------------------------------------------------------------
+--
+--HL('String', { fg = stringc })
+--HL('Character', { fg = stringc })
+--HL('Number', { fg = numberc })
+--HL('Boolean', { fg = numberc })
+--HL('Float', { fg = numberc })
+--HL('Constant', { fg = numberc })
+--
+-----------------------------------------------------------------------------
+---- Functions & identifiers
+-----------------------------------------------------------------------------
+--
+--HL('Identifier', { fg = fg })
+--HL('Function', { fg = func })
+--
+-----------------------------------------------------------------------------
+---- Keywords / control
+-----------------------------------------------------------------------------
+--
+--HL('Statement', { fg = keyword })
+--HL('Keyword', { fg = keyword })
+--HL('Conditional', { fg = keyword })
+--HL('Repeat', { fg = keyword })
+--HL('Operator', { fg = fg })
+--HL('PreProc', { fg = accent })
+--
+-----------------------------------------------------------------------------
+---- Types
+-----------------------------------------------------------------------------
+--
+--HL('Type', { fg = typec })
+--HL('StorageClass', { fg = typec })
+--HL('Structure', { fg = typec })
+--HL('Typedef', { fg = typec })
+--
+-----------------------------------------------------------------------------
+---- Treesitter (Ayu style)
+-----------------------------------------------------------------------------
+--
+--HL('@comment', { fg = comment, italic = true })
+--HL('@string', { fg = stringc })
+--HL('@number', { fg = numberc })
+--HL('@boolean', { fg = numberc })
+--HL('@float', { fg = numberc })
+--
+--HL('@function', { fg = func })
+--HL('@method', { fg = func })
+--HL('@function.call', { fg = func })
+--HL('@function.builtin', { fg = accent })
+--
+--HL('@keyword', { fg = keyword })
+--HL('@keyword.function', { fg = keyword })
+--
+--HL('@type', { fg = typec })
+--HL('@type.builtin', { fg = typec })
+--
+--HL('@variable', { fg = fg })
+--HL('@variable.builtin', { fg = accent })
+--
+--HL('@field', { fg = fg })
+--HL('@property', { fg = fg })
+--
+-----------------------------------------------------------------------------
+---- Diagnostics (Ayu style)
+-----------------------------------------------------------------------------
+--
+--HL('DiagnosticError', { fg = errorc })
+--HL('DiagnosticWarn', { fg = warning })
+--HL('DiagnosticInfo', { fg = accent })
+--HL('DiagnosticHint', { fg = typec })
+--
+--HL('DiagnosticUnderlineError', { undercurl = true, sp = errorc })
+--HL('DiagnosticUnderlineWarn', { undercurl = true, sp = warning })
+--HL('DiagnosticUnderlineInfo', { undercurl = true, sp = accent })
+--HL('DiagnosticUnderlineHint', { undercurl = true, sp = typec })
+--
+---- Transparency
+--HL('LineNr', { fg = p.color3, bg = 'none', italic = false, bold = false })
+--HL('Normal', { bg = 'none' })
+--HL('NormalFloat', { bg = 'none' })
+--HL('Pmenu', { bg = 'none' })
+--HL('FloatBorder', { bg = 'none' })
+--HL('NormalNC', { bg = 'none' })
+--HL('EndOfBuffer', { bg = 'none' })
+--HL('SignColumn', { bg = 'none' })
+--HL('FidgetTitle', { bg = 'none' })
+--HL('FidgetTask', { bg = 'none' })
+--HL('BlinkCmpMenu', { bg = 'none' })
+--HL('BlinkCmpMenuSelection', { bg = '#7A2B2B' })
+--
+--vim.cmd [[
+--  hi StatusLine guibg=NONE ctermbg=NONE
+--  hi StatusLineNC guibg=NONE ctermbg=NONE
+--]]
