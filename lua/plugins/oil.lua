@@ -202,8 +202,4 @@ return {
       border = 'rounded',
     },
   },
-  vim.keymap.set('n', '<leader>se', function()
-    local oil = require 'oil'
-    oil.toggle_float()
-  end, { desc = 'Open oil in parent directory of current file' }),
 }

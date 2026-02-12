@@ -59,3 +59,8 @@ vim.keymap.set('n', '<leader>ct', ':ColorizerToggle<CR>', { desc = 'Toggle Color
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+
+vim.keymap.set('n', '<leader>-', function()
+  local oil = require 'oil'
+  oil.toggle_float()
+end, { desc = 'Open oil in parent directory of current file' })

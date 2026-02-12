@@ -40,7 +40,7 @@ return {
     -- List of lower row
     local keymaps = { 'z', 'x', "c", "v", 'b' }
     for i = 1, 5 do
-      vim.keymap.set('n', '<leader>h' .. keymaps[i], function()
+      vim.keymap.set('n', '<leader>' .. keymaps[i], function()
         harpoon:list():select(i)
       end, { desc = 'saved buffer {' .. i .. '}' })
     end
