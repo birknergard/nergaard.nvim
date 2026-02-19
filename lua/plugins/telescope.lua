@@ -54,7 +54,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
       pickers = {
         find_files = {
           theme = 'ivy',
-          hidden = true,
+          hidden = false,
         },
 
         live_grep = {},

@@ -10,7 +10,7 @@ end, { desc = 'Open terminal in current dir' })
 vim.keymap.set('x', 'p', [["_dP]], { noremap = true, silent = true })
 
 -- TODO: Toggle signcolumn
-vim.keymap.set('n', '<leader>cs', function()
+vim.keymap.set('n', '<leader>ts', function()
   print 'Toggling signcolumn'
 end, { desc = 'Hide/show sign column' })
 
@@ -55,7 +55,7 @@ end, { desc = 'Toggle floating error message' })
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Keybinding to toggle Colorizer for the current buffer
-vim.keymap.set('n', '<leader>ct', ':ColorizerToggle<CR>', { desc = 'Toggle Colorizer' })
+vim.keymap.set('n', '<leader>tc', ':ColorizerToggle<CR>', { desc = 'Toggle Colorizer' })
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')

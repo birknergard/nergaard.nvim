@@ -34,7 +34,7 @@ return {
         nerd_font_variant = 'mono',
       },
       signature = { enabled = true },
-      fuzzy = { implementation = 'prefer_rust_with_warning' },
+      fuzzy = { implementation = 'lua' },
       completion = {
         documentation = {
           auto_show = true,
