@@ -129,8 +129,8 @@ return {
           lualine_c = {
             {
               'harpoon2',
-              indicators = { ' x ', ' c ', ' v ', ' b ' },
-              active_indicators = { '[x]', '[c]', '[v]', '[b]' },
+              indicators = { ' z ', ' x ', ' c ', ' v ', ' b ' },
+              active_indicators = { '[z]', '[x]', '[c]', '[v]', '[b]' },
               color_active = { fg = colors.red },
               _separator = '',
               icon = '󱡅',

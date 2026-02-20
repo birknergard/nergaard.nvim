@@ -38,7 +38,7 @@ return {
     -- TODO: Get mark name in preview instead of index
     local list = harpoon:list()
     -- List of lower row
-    local keymaps = { 'x', 'c', 'v', 'b' }
+    local keymaps = { 'z', 'x', 'c', 'v', 'b' }
     for i = 1, #keymaps do
       vim.keymap.set('n', '<leader>' .. keymaps[i], function()
         harpoon:list():select(i)
