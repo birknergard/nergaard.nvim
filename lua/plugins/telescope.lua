@@ -106,8 +106,8 @@ return { -- Fuzzy Finder (files, lsp, etc)
           actions.select_default:replace(function()
             local file = action_state.get_selected_entry()
             local cwd = vim.fn.getcwd() .. '/'
+            vim.cmd('vsplit ' .. cwd .. file.value)
             vim.cmd 'stopinsert'
-            vim.cmd('vsplit ' .. cwd .. file.value .. '()')
           end)
           return true
         end,
