@@ -5,10 +5,10 @@ return {
     dependencies = { 'nvim-lua/plenary.nvim' },
     opts = { signs = false },
   },
-  { -- Keep relative line numbers from 1->5
-    'mluders/comfy-line-numbers.nvim',
-    opts = {},
-  },
+  --{ -- Keep relative line numbers from 1->5
+  --  'mluders/comfy-line-numbers.nvim',
+  --  opts = {},
+  --},
   { -- Extended webicons
     'nvim-tree/nvim-web-devicons',
     opts = {},

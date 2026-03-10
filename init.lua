@@ -93,7 +93,7 @@ require('lazy').setup {
   require 'plugins.harpoon',
 
   -- Minor plugins
-  require 'plugins.autopairs',
+  -- require 'plugins.autopairs',
   require 'plugins.surround',
   require 'plugins.snacks',
   require 'plugins.colorizer',
