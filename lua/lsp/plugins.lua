@@ -15,7 +15,6 @@ return {
     version = 'v1.*',
 
     ---@module 'blink.cmp'
-    ---@type blink.cmp.Config
     opts = {
       keymap = { preset = 'default' },
       appearance = {

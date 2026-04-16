@@ -101,14 +101,16 @@ require('lazy').setup {
   -- require 'plugins.lint',
 
   -- Load color scheme last
-  require 'colorschemes.ayu',
+  --require 'colorschemes.ayu',
+  --require 'colorschemes.tokyodark',
+  require 'colorschemes.kanagawa',
   --require 'colorschemes.catppuccin',
 }
 
 -- Load LSP
 require 'lsp.setup'
 
-vim.cmd 'colorscheme ayu-dark'
+vim.cmd.colorscheme 'kanagawa-wave'
 
 require 'keymaps'
 require 'autocmds'

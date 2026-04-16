@@ -1,5 +1,5 @@
 return {
-  'birknergard/neovim-ayu',
+  'shatur/neovim-ayu',
   priority = 1000, -- Lazy load late
   config = function()
     local custom_colors = {
@@ -13,8 +13,8 @@ return {
       mirage = false, -- Optional: set to true to use the mirage theme variant
       overrides = {
         -- Transparent background settings
-        Normal = { fg = '#bfbdb6', bg = 'none' },
-        NormalFloat = { fg = '#bfbdb6', bg = 'none' },
+        Normal = { bg = 'none' },
+        NormalFloat = { bg = 'none' },
         Pmenu = { bg = 'none' },
         FloatBorder = { bg = 'none' },
         NormalNC = { bg = 'none' },
@@ -32,7 +32,6 @@ return {
         BiscuitColor = { bg = 'none', fg = '#53555e' },
         -- Changes highlighting color (visual mode)
         Visual = { bg = '#7A2B2B' },
-
         -- Configure BlinkCmp appearance
         BlinkCmpMenuSelection = { bg = '#7A2B2B' },
 
@@ -42,7 +41,7 @@ return {
           fg = '#ffffff', -- text
           bold = true,
         },
-        ['@lsp.type.method'] = { fg = '#F07178' },
+        ['@lsp.type.method.java'] = { fg = '#F07178' },
         ['@function.declaration'] = { fg = '#FF8721' },
 
         TreesitterContext = {

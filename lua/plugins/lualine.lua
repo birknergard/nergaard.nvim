@@ -14,14 +14,14 @@ return {
     config = function()
       -- custom theme
       local colors = {
-        black = '#0f1419',
-        orange = '#ff8e42',
-        beige = '#ffee99',
-        white = '#e6e1cf',
-        green = '#b8cc52',
-        blue = '#36a3d9',
+        black = '#16161d',
+        orange = '#ffa066',
+        beige = '#e6c384',
+        white = '#dcd7ba',
+        green = '#98bb6c',
+        blue = '#7e9cd8',
         red = '#f07178',
-        gray = '#3e4b59',
+        gray = '#727169',
       }
 
       local theme = {

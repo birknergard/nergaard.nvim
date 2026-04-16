@@ -1,29 +1,34 @@
 return { -- Highlight, edit, and navigate code
+  --{
+  --  'romus204/tree-sitter-manager.nvim',
+  --  dependencies = {}, -- tree-sitter CLI must be installed system-wide
+  --  config = function()
+  --    require('tree-sitter-manager').setup {
+  --      -- Default Options
+  --      ensure_installed = {
+  --        'markdown',
+  --        'rust',
+  --        'typescript',
+  --        'javascript',
+  --        'c-sharp',
+  --        'lua',
+  --      }, -- list of parsers to install at the start of a neovim session
+  --      border = 'rounded', -- border style for the window (e.g. "rounded", "single"), if nil, use the default border style defined by 'vim.o.winborder'. See :h 'winborder' for more info.
+  --      auto_install = true, -- if enabled, install missing parsers when editing a new file
+  --      highlight = true, -- treesitter highlighting is enabled by default
+  --      -- languages = {}, -- override or add new parser sources
+  --      -- parser_dir = vim.fn.stdpath("data") .. "/site/parser",
+  --      -- query_dir = vim.fn.stdpath("data") .. "/site/queries",
+  --    }
+  --  end,
+  --},
   {
     'nvim-treesitter/nvim-treesitter',
+    branch = 'main',
     build = ':TSUpdate',
-    main = 'nvim-treesitter.configs', -- Sets main module to use for opts
-    -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
+    lazy = false,
     opts = {
-      ensure_installed = {
-        'bash',
-        'diff',
-        'html',
-        'lua',
-        'luadoc',
-        'markdown',
-        'markdown_inline',
-        'query',
-        'vim',
-        'vimdoc',
-        'java',
-        'c',
-        'cpp',
-        'typescript',
-        'javascript',
-        'css',
-        'yaml',
-      },
+      ensure_installed = { 'rust' },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {

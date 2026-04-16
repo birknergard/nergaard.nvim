@@ -38,18 +38,4 @@ return {
   { -- Fixes indentation sillyness
     'tpope/vim-sleuth',
   },
-  { -- Utility tool for showing scope context on the end of scope line
-    'code-biscuits/nvim-biscuits',
-    dependencies = {
-      'nvim-treesitter/nvim-treesitter',
-    },
-    opts = {
-      toggle_keybind = '<leader>tb',
-      cursor_line_only = true,
-      show_on_start = true,
-      default_config = {
-        prefix_string = '? ',
-      },
-    },
-  },
 }
