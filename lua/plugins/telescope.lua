@@ -167,5 +167,9 @@ return { -- Fuzzy Finder (files, lsp, etc)
         theme = 'dropdown',
       }
     end, { desc = '[/] Fuzzily search in current buffer' })
+
+    vim.keymap.set('n', '<leader>si', function()
+      builtin.fd {}
+    end, { desc = '[S]earch directories' })
   end,
 }

@@ -29,7 +29,7 @@ return {
         TelescopeSelection = { fg = '#ffffff', bg = custom_colors.redb },
         -- Line number colors
         LineNr = { fg = '#53555e', bg = 'none', italic = false, bold = false },
-        BiscuitColor = { bg = "none", fg = "#53555e" },
+        BiscuitColor = { bg = 'none', fg = '#53555e' },
         -- Changes highlighting color (visual mode)
         Visual = { bg = '#7A2B2B' },
 
@@ -42,7 +42,7 @@ return {
           fg = '#ffffff', -- text
           bold = true,
         },
-        ['@lsp.type.method.java'] = { fg = '#F07178' },
+        ['@lsp.type.method'] = { fg = '#F07178' },
         ['@function.declaration'] = { fg = '#FF8721' },
 
         TreesitterContext = {

@@ -37,6 +37,7 @@ return {
     -- Map harpoon index 1 to 9
     -- TODO: Get mark name in preview instead of index
     local list = harpoon:list()
+
     -- List of lower row
     local keymaps = { 'z', 'x', 'c', 'v', 'b' }
     for i = 1, #keymaps do

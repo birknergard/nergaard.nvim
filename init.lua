@@ -110,8 +110,8 @@ require 'lsp.setup'
 
 vim.cmd 'colorscheme ayu-dark'
 
-require 'keymaps.common'
-require 'autocmds.common'
+require 'keymaps'
+require 'autocmds'
 
 -- For Neovim 0.5+ (WinSeparator overrides VertSplit)
 vim.cmd [[highlight WinSeparator guifg=#0e1018 guibg=NONE]]

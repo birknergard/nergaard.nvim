@@ -1,15 +1,4 @@
 return {
-  --{ -- Useful status updates for LSP.
-  --  'j-hui/fidget.nvim',
-  --  opts = {
-  --    notification = {
-  --      window = {
-  --        winblend = 0,    -- transparency (0 = opaque)
-  --        border = 'none', -- 'single', 'double', 'none', etc.
-  --      },
-  --    },
-  --  },
-  --},
   { -- Mason for managing (most) lsp servers
     'mason-org/mason.nvim',
     opts = {

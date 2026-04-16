@@ -7,7 +7,7 @@ return {
     -- Id is automatically added at the beginning, and name at the end
     -- See :help oil-columns
     columns = {
-      'icon',
+      -- 'icon',
       -- "permissions",
       -- "size",
       -- "mtime",
@@ -66,7 +66,7 @@ return {
       ['<C-h>'] = { 'actions.select', opts = { horizontal = true } },
       ['<C-t>'] = { 'actions.select', opts = { tab = true } },
       ['<C-p>'] = 'actions.preview',
-      ['<C-c>'] = { 'actions.close', mode = 'n' },
+      ['<Esc><Esc>'] = { 'actions.close', mode = 'n' },
       ['<C-l>'] = 'actions.refresh',
       ['-'] = { 'actions.parent', mode = 'n' },
       ['_'] = { 'actions.open_cwd', mode = 'n' },
@@ -127,8 +127,8 @@ return {
       -- Padding around the floating window
       padding = 2,
       -- max_width and max_height can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
-      max_width = 0,
-      max_height = 0,
+      max_width = 0.5,
+      max_height = 0.5,
       border = 'rounded',
       win_options = {
         winblend = 0,
