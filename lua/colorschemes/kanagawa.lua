@@ -32,6 +32,7 @@ return {
         BlinkCmpMenu = { bg = 'none' },
         BlinkCmpMenuBorder = { bg = 'none' },
         LineNr = { fg = '#53555e', bg = 'none', italic = false, bold = false },
+        Visual = { bg = '#C34043' },
         YankHighlightColor = {
           bg = '#ff8074',
           fg = '#ffffff', -- text

@@ -81,6 +81,7 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Lazy, plugin manager
 require('lazy').setup {
+
   -- Major plugins
   require 'lsp.plugins',
   require 'plugins.which_key',
@@ -91,8 +92,6 @@ require('lazy').setup {
   require 'plugins.autoformat',
   require 'plugins.oil',
   require 'plugins.harpoon',
-
-  -- Minor plugins
   -- require 'plugins.autopairs',
   require 'plugins.surround',
   require 'plugins.snacks',
@@ -117,7 +116,6 @@ require 'autocmds'
 
 -- For Neovim 0.5+ (WinSeparator overrides VertSplit)
 vim.cmd [[highlight WinSeparator guifg=#0e1018 guibg=NONE]]
-
 -- Set lualine backgrounds to transparent AFTER theme has been loaded
 vim.cmd [[
   hi StatusLine guibg=NONE ctermbg=NONE

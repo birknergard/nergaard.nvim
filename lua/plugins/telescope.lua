@@ -55,6 +55,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
         find_files = {
           theme = 'ivy',
           hidden = false,
+          no_ignore = false,
         },
 
         live_grep = {},
@@ -160,7 +161,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
     vim.keymap.set('n', '<leader>sy', builtin.highlights, { desc = '[S]earch [H]ighlight Groups' })
 
     -- Slightly advanced example of overriding default behavior and theme
-    vim.keymap.set('n', '<leader>s/', function()
+    vim.keymap.set('n', '<leader>/', function()
       -- You can pass additional configuration to Telescope to change the theme, layout, etc.
       builtin.current_buffer_fuzzy_find {
         previewer = false,

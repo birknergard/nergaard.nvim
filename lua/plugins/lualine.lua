@@ -15,55 +15,56 @@ return {
       -- custom theme
       local colors = {
         black = '#16161d',
+        bg = '#1f1f28',
         orange = '#ffa066',
         beige = '#e6c384',
         white = '#dcd7ba',
         green = '#98bb6c',
         blue = '#7e9cd8',
-        red = '#f07178',
+        red = '#C34043',
         gray = '#727169',
       }
 
       local theme = {
         normal = {
-          a = { fg = colors.blue, bg = 'none' },
-          b = { fg = colors.blue, bg = 'none' },
+          a = { fg = colors.blue, bg = colors.black },
+          b = { fg = colors.blue, bg = colors.black },
           c = { fg = colors.white, bg = 'none' },
-          x = { fg = colors.gray, bg = 'none' },
-          z = { fg = colors.white, bg = 'none' },
+          x = { fg = colors.gray, bg = colors.black },
+          z = { fg = colors.white, bg = colors.black },
         },
         insert = {
-          a = { fg = colors.green, bg = 'none' },
-          b = { fg = colors.green, bg = 'none' },
+          a = { fg = colors.green, bg = colors.black },
+          b = { fg = colors.blue, bg = colors.black },
           c = { fg = colors.white, bg = 'none' },
-          x = { fg = colors.gray, bg = 'none' },
-          z = { fg = colors.white, bg = 'none' },
+          x = { fg = colors.gray, bg = colors.black },
+          z = { fg = colors.white, bg = colors.black },
         },
         visual = {
-          a = { fg = colors.beige, bg = 'none' },
-          b = { fg = colors.beige, bg = 'none' },
+          a = { fg = colors.beige, bg = colors.black },
+          b = { fg = colors.blue, bg = colors.black },
           c = { fg = colors.white, bg = 'none' },
-          x = { fg = colors.gray, bg = 'none' },
-          z = { fg = colors.white, bg = 'none' },
+          x = { fg = colors.gray, bg = colors.black },
+          z = { fg = colors.white, bg = colors.black },
         },
         replace = {
-          a = { fg = colors.red, bg = 'none' },
-          b = { fg = colors.red, bg = 'none' },
+          a = { fg = colors.red, bg = colors.black },
+          b = { fg = colors.blue, bg = colors.black },
           c = { fg = colors.white, bg = 'none' },
-          x = { fg = colors.gray, bg = 'none' },
-          z = { fg = colors.white, bg = 'none' },
+          x = { fg = colors.gray, bg = colors.black },
+          z = { fg = colors.white, bg = colors.black },
         },
         command = {
-          a = { fg = colors.orange, bg = 'none' },
-          b = { fg = colors.orange, bg = 'none' },
+          a = { fg = colors.orange, bg = colors.black },
+          b = { fg = colors.blue, bg = colors.black },
           c = { fg = colors.white, bg = 'none' },
-          x = { fg = colors.gray, bg = 'none' },
-          z = { fg = colors.white, bg = 'none' },
+          x = { fg = colors.gray, bg = colors.black },
+          z = { fg = colors.white, bg = colors.black },
         },
         inactive = {
-          a = { fg = colors.gray, bg = 'none' },
-          b = { fg = colors.gray, bg = 'none' },
-          c = { fg = colors.gray, bg = 'none' },
+          a = { fg = colors.gray, bg = colors.black },
+          b = { fg = colors.gray, bg = colors.black },
+          c = { fg = colors.gray, bg = colors.black },
         },
       }
 
@@ -76,7 +77,9 @@ return {
         options = {
           icons_enabled = true,
           theme = theme,
-          component_separators = { left = '', right = '-' },
+          padding = 1,
+
+          component_separators = { left = '', right = '' },
           section_separators = { left = '', right = '' },
           disabled_filetypes = {
             statusline = { 'neo-tree', 'Outline', 'packer' },
@@ -109,7 +112,7 @@ return {
           lualine_a = {
             {
               'mode',
-              padding = { left = 0.5, right = 1 },
+              --padding = { left = 0.5, right = 1 },
               fmt = function(str)
                 return string.upper(str)
               end,
@@ -120,32 +123,30 @@ return {
               'branch',
               icons_enabled = true,
               icon = '',
-              padding = { left = 0.5, right = 0 },
+              --padding = { left = 0.5, right = 0 },
               fmt = function(str)
                 return str
               end,
             },
-          },
-          lualine_c = {
             {
               'harpoon2',
-              indicators = { ' z ', ' x ', ' c ', ' v ', ' b ' },
-              active_indicators = { '[z]', '[x]', '[c]', '[v]', '[b]' },
+              indicators = { 'z', 'x', 'c', 'v', 'b' },
+              active_indicators = { 'Z', 'X', 'C', 'V', 'B' },
               color_active = { fg = colors.red },
               _separator = '',
               icon = '󱡅',
               icons_enabled = false,
-              fmt = function(str)
-                return str
-              end,
             },
           },
+          lualine_c = {},
           lualine_x = {
             { 'lsp_status', icons_enabled = false, color = { fg = colors.orange } },
           },
           lualine_y = { 'diagnostics' },
           lualine_z = {
-            { 'location', padding = 0 },
+            {
+              'location',
+            },
           },
         },
         inactive_sections = {
@@ -163,16 +164,16 @@ return {
               'filename',
               padding = { left = 1, right = 0 },
               path = 1,
-              color = { fg = colors.green },
+              color = { fg = colors.green, bg = colors.black },
               -- icon = '',
               symbols = {
                 modified = '[edited]', -- Text to show when the file is modified.
                 readonly = '[readonly]', -- Text to show when the file is non-modifiable or readonly.
-                unnamed = '[empty]', -- Text to show for unnamed buffers.
+                unnamed = '[none]', -- Text to show for unnamed buffers.
                 newfile = '[new file]', -- Text to show for newly created file before first write
               },
               fmt = function(str)
-                return '  ' .. str
+                return ' ' .. str .. ' '
               end,
             },
           },
@@ -180,29 +181,34 @@ return {
           lualine_b = {
             {
               'diff',
-              color = { fg = colors.white },
-              fmt = function(str)
-                return str
-              end,
+              color = { fg = colors.white, bg = colors.black },
             },
           },
           lualine_c = {},
           lualine_x = {
-            { 'searchcount', color = { fg = colors.orange } },
-          },
-          lualine_y = {
             {
               'filetype',
-              padding = 0,
               icons_enabled = true,
               icon = { align = 'right' },
               color = { fg = colors.white },
+            },
+          },
+          lualine_y = {
+            {
+              'searchcount',
+              color = { fg = colors.orange },
+              fmt = function(str)
+                return str
+              end,
             },
           },
           lualine_z = {
             {
               'progress',
               color = { fg = colors.blue },
+              fmt = function(str)
+                return str
+              end,
             },
           },
         },
