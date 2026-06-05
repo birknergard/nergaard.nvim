@@ -29,6 +29,7 @@ require('nvim-ts-autotag').setup {
 -- Disable relative line numbers when in insert mode
 local augroup = vim.api.nvim_create_augroup('numbertoggle', {})
 
+-- Toggle relative line numbers when entering insert mode
 vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'CmdlineLeave', 'WinEnter' }, {
   pattern = '*',
   group = augroup,
@@ -38,7 +39,6 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'Cmdline
     end
   end,
 })
-
 vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'CmdlineEnter', 'WinLeave' }, {
   pattern = '*',
   group = augroup,

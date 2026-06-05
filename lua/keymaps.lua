@@ -24,10 +24,11 @@ vim.keymap.set('n', '<leader>y', '"+y', { noremap = true })
 -- Yank to system cliboard
 vim.keymap.set('v', '<leader>y', '"+y', { noremap = true })
 
--- Paste from system clipboard
-vim.keymap.set('n', '<leader>p', '"+p', { noremap = true })
+-- Append semicolon to end of line
+vim.keymap.set('n', ';', 'A;<ESC>', { noremap = true })
 
 -- Paste from system clipboard
+vim.keymap.set('n', '<leader>p', '"+p', { noremap = true })
 vim.keymap.set('v', '<leader>p', '"+p', { noremap = true })
 
 -- Create splits
@@ -35,11 +36,14 @@ vim.keymap.set('n', '<leader>Sv', '<cmd>vsplit<CR>', { desc = 'Split vertically'
 vim.keymap.set('n', '<leader>Sh', '<cmd>split<CR>', { desc = 'Split horizontally' })
 
 -- Centers screen on new position with C-d, C-u
-vim.keymap.set('n', '<C-d>', '<C-d>zz', { noremap = true, silent = true })
-vim.keymap.set('n', '<C-u>', '<C-u>zz', { noremap = true, silent = true })
+vim.keymap.set('n', '<C-d>', '<C-d>', { noremap = true, silent = true })
+vim.keymap.set('n', '<C-u>', '<C-u>', { noremap = true, silent = true })
 
--- rebind exit terminal mode
+-- Rebind exit terminal mode
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+
+-- Norm command on selection
+vim.keymap.set('v', '<leader>n', ':norm ', { desc = 'norm command on selection', noremap = true })
 
 -- Keybinds to make split navigation easier.
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })

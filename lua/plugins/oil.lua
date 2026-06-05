@@ -95,7 +95,7 @@ return {
       -- Can be "fast", true, or false. "fast" will turn it off for large directories.
       natural_order = 'fast',
       -- Sort file and directory names case insensitive
-      case_insensitive = false,
+      case_insensitive = true,
       sort = {
         -- sort order can be "asc" or "desc"
         -- see :help oil-columns to see which columns are sortable
