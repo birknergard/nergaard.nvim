@@ -87,17 +87,14 @@ require('lazy').setup {
   require 'plugins.which_key',
   require 'plugins.lualine',
   require 'plugins.treesitter',
-  -- require 'plugins.lazydev',
   require 'plugins.telescope',
   require 'plugins.autoformat',
   require 'plugins.oil',
   require 'plugins.harpoon',
-  -- require 'plugins.autopairs',
   require 'plugins.surround',
   require 'plugins.snacks',
   require 'plugins.colorizer',
   require 'plugins.misc',
-  -- require 'plugins.lint',
 
   -- Load color scheme last
   --require 'colorschemes.ayu',
@@ -106,17 +103,14 @@ require('lazy').setup {
   --require 'colorschemes.catppuccin',
 }
 
--- Load LSP
+-- Load modules
 require 'lsp.setup'
-
 vim.cmd.colorscheme 'kanagawa-wave'
-
 require 'keymaps'
 require 'autocmds'
 
--- For Neovim 0.5+ (WinSeparator overrides VertSplit)
-vim.cmd [[highlight WinSeparator guifg=#0e1018 guibg=NONE]]
 -- Set lualine backgrounds to transparent AFTER theme has been loaded
+vim.cmd [[highlight WinSeparator guifg=#0e1018 guibg=NONE]]
 vim.cmd [[
   hi StatusLine guibg=NONE ctermbg=NONE
   hi StatusLineNC guibg=NONE ctermbg=NONE

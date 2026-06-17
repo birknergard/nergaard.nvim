@@ -130,8 +130,8 @@ return {
             },
             {
               'harpoon2',
-              indicators = { 'z', 'x', 'c', 'v', 'b' },
-              active_indicators = { 'Z', 'X', 'C', 'V', 'B' },
+              indicators = { 'n', 'm', ',', '.', 'å' },
+              active_indicators = { 'N', 'M', ';', ':', 'Å' },
               color_active = { fg = colors.red },
               _separator = '',
               icon = '󱡅',
