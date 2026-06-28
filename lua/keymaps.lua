@@ -25,7 +25,7 @@ vim.keymap.set('n', '<leader>y', '"+y', { noremap = true })
 vim.keymap.set('v', '<leader>y', '"+y', { noremap = true })
 
 -- Append semicolon to end of line
-vim.keymap.set('n', ';', 'A;<ESC>', { noremap = true })
+vim.keymap.set('n', '<leader>;', 'A;<ESC>', { noremap = true })
 
 -- Paste from system clipboard
 vim.keymap.set('n', '<leader>p', '"+p', { noremap = true })

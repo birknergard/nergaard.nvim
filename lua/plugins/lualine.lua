@@ -131,7 +131,7 @@ return {
             {
               'harpoon2',
               indicators = { 'n', 'm', ',', '.', 'å' },
-              active_indicators = { 'N', 'M', ';', ':', 'Å' },
+              active_indicators = { 'N', 'M', ',', '.', 'Å' },
               color_active = { fg = colors.red },
               _separator = '',
               icon = '󱡅',
@@ -167,10 +167,10 @@ return {
               color = { fg = colors.green, bg = colors.black },
               -- icon = '',
               symbols = {
-                modified = '[edited]', -- Text to show when the file is modified.
+                modified = '[edited]',   -- Text to show when the file is modified.
                 readonly = '[readonly]', -- Text to show when the file is non-modifiable or readonly.
-                unnamed = '[none]', -- Text to show for unnamed buffers.
-                newfile = '[new file]', -- Text to show for newly created file before first write
+                unnamed = '[none]',      -- Text to show for unnamed buffers.
+                newfile = '[new file]',  -- Text to show for newly created file before first write
               },
               fmt = function(str)
                 return ' ' .. str .. ' '
